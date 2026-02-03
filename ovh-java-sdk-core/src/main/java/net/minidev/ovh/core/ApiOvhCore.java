@@ -590,7 +590,7 @@ public class ApiOvhCore {
 				failure++;
 				continue;
 			}
-			InputStream stream = (responseCode == 200) ? connection.getInputStream() : connection.getErrorStream();
+			InputStream stream = (responseCode == 200 || responseCode == 201) ? connection.getInputStream() : connection.getErrorStream();
 			BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 			// build response
 			StringBuilder responseSb = new StringBuilder();
@@ -608,7 +608,7 @@ public class ApiOvhCore {
 							+ failure + " retry TS: " + new Date());
 				continue;
 			}
-			if (responseCode == 200)
+			if (responseCode == 200 || responseCode == 201)
 				return response;
 			OvhErrorMessage err = readAsError(response);
 			if (err != null) {
